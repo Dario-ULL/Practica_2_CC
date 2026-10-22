@@ -9,28 +9,18 @@
 */
 
 #include "includes/LectorDeArchivo.h"
-#include "includes/AutomataPilaVaciado.h"
+#include "includes/MaquinaTuring.h"
 
 #include <iostream>
 #include <string>
 
 int main(int argc, char* argv[]) {
   std::string archivo_config = "";
-  std::string activar_traza = "";
   for (int i = 0; i < argc; i++) {
     std::string arg = argv[i];
     if (arg == "-config") {
       if (i + 1 < argc) {
         archivo_config = argv[i + 1];
-        i++;
-      } else {
-        std::cerr << "ERROR: No se especificó el archivo después de -config" << std::endl;
-        return 2;
-      }
-    }
-    if (arg == "-trace") {
-      if (i + 1 < argc) {
-        activar_traza = argv[i + 1];
         i++;
       } else {
         std::cerr << "ERROR: No se especificó el archivo después de -config" << std::endl;
@@ -43,20 +33,12 @@ int main(int argc, char* argv[]) {
     return 2;
   }
   std::cout << "Archivo recibido: " << archivo_config << std::endl;
-  AutomataPilaVaciado automata;
+  MaquinaTuring maquina;
   try {
     LectorDeArchivo lector(archivo_config);
-    automata = lector.getAutomataPilaVaciado();
+    maquina = lector.getMaquinaTuring();
     std::cout << "Autómata cargado correctamente desde el archivo." << std::endl;
-    if (activar_traza == "y") {
-      automata.activarTraza(true);
-    } else if (activar_traza == "n") {
-      automata.activarTraza(false);
-    } else {
-      std::cerr << "ERROR: Opción de traza inválida. Use 'y' o 'n'." << std::endl;
-      return 2;
-    }
-    automata.showAutomata();
+    maquina.showMaquinaTuring();
   } catch (const std::exception& e) {
     std::cerr << "ERROR: Error al procesar el archivo: " << e.what() << std::endl;
     return 3;
@@ -71,15 +53,17 @@ int main(int argc, char* argv[]) {
         std::cout << "Saliendo del programa." << std::endl;
         break;
       }
-      if (automata.resolverCadena(cadenaEntrada)) {
+      if (maquina.ejecutar(cadenaEntrada)) {
         std::cout << "La cadena es aceptada por el autómata." << std::endl;
       } else {
         std::cout << "La cadena no es aceptada por el autómata." << std::endl;
       }
+      maquina.mostrarCintas();
     } catch (const std::exception& e) {
       std::cerr << "ERROR: Error al procesar la cadena de entrada: " << e.what() << std::endl;
       return 4;
     }
-  }
+  }   
+  
   return 0;
 }

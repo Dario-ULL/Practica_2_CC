@@ -4,43 +4,46 @@
  * Complejidad Computacional
  * 
  * @author  Dario Dominguez Gonzalez
- * @date    8/10/2026
+ * @date    21/10/2026
  * @brief   Programar un simulador de un autómata con pila
 */
 
 #pragma once
 
+#include <vector>
 #include <string>
 #include <iostream>
 
 struct Transicion {
-  std::string simboloEntrada_;
-  std::string simboloPila_;
+  std::vector<std::string> simbolosLeidos_;
   std::string estadoDestino_;
-  std::string simboloPilaNuevo_;
+  std::vector<std::string> simbolosEscritos_;
+  std::vector<std::string> movimientos_;
 
   Transicion() = default;
-  Transicion(std::string simboloEntrada, std::string simboloPila, std::string estadoDestino, std::string simboloPilaNuevo): simboloEntrada_(simboloEntrada),
-                                                                                                                    simboloPila_(simboloPila),
-                                                                                                                    estadoDestino_(estadoDestino),
-                                                                                                                    simboloPilaNuevo_(simboloPilaNuevo) {}
-  bool esEpsilonEntrada() const { return simboloEntrada_ == "."; }
-  bool esEpsilonPila() const { return simboloPilaNuevo_ == "."; }
+
+  Transicion(const std::vector<std::string>& leidos,
+             const std::string& estadoDestino,
+             const std::vector<std::string>& escritos,
+             const std::vector<std::string>& movimientos)
+      : simbolosLeidos_(leidos),
+        estadoDestino_(estadoDestino),
+        simbolosEscritos_(escritos),
+        movimientos_(movimientos) {}
+
   void showTransicion() const {
-    std::cout << "Transición: (" << simboloEntrada_ << ", " << simboloPila_ << ") --> " << estadoDestino_ << " [Push: " << simboloPilaNuevo_ << "]" << std::endl;
-  }
-};
-
-struct Traza {
-  std::string estadoActual_;
-  std::string cadenaActual_;
-  std::string pilaActual_;
-  Transicion transicionAplicada_;
-
-  void cadenaVacia() {
-    cadenaActual_ = ".";
-  }
-  void pilaVacia() {
-    pilaActual_ = ".";
+    std::cout << "Transición: (";
+    for (size_t i = 0; i < simbolosLeidos_.size(); ++i) {
+      std::cout << simbolosLeidos_[i] << (i + 1 < simbolosLeidos_.size() ? ", " : "");
+    }
+    std::cout << ") --> " << estadoDestino_ << ", escribe: (";
+    for (size_t i = 0; i < simbolosEscritos_.size(); ++i) {
+      std::cout << simbolosEscritos_[i] << (i + 1 < simbolosEscritos_.size() ? ", " : "");
+    }
+    std::cout << "), movs: (";
+    for (size_t i = 0; i < movimientos_.size(); ++i) {
+      std::cout << movimientos_[i] << (i + 1 < movimientos_.size() ? ", " : "");
+    }
+    std::cout << ")" << std::endl;
   }
 };

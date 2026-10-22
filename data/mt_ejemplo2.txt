@@ -1,0 +1,47 @@
+# Sustituye la cadena por: (num_b) . (num_a) en unario
+# MT determinista de 2 cintas
+q0 q_reb_inicio q_b_primera q_b_siguientes q_sep q_reb_c2 q_a_primera q_a_siguientes q_reb_a q_reb_b qf
+a b 0 1 X
+a b 0 1 X .
+q0
+.
+qf
+2
+q0 a . q0 . a R R
+q0 b . q0 . b R R
+q0 . . q_reb_inicio . . L L
+
+q_reb_inicio . a q_reb_inicio . a L L
+q_reb_inicio . b q_reb_inicio . b L L
+q_reb_inicio . . q_b_primera . . R R
+
+q_b_primera . b q_b_siguientes 1 X R R
+q_b_primera . a q_b_primera . a S R
+q_b_primera . . q_sep 0 . R S
+
+q_b_siguientes . b q_b_siguientes 1 X R R
+q_b_siguientes . a q_b_siguientes . a S R
+q_b_siguientes . . q_sep . . S S
+
+q_sep . . q_reb_c2 . . R L
+
+q_reb_c2 . a q_reb_c2 . a S L
+q_reb_c2 . X q_reb_c2 . X S L
+q_reb_c2 . . q_a_primera . . S R
+
+q_a_primera . a q_a_siguientes 1 X R R
+q_a_primera . X q_a_primera . X S R
+q_a_primera . . q_reb_a 0 . S S
+
+q_a_siguientes . a q_a_siguientes 1 X R R
+q_a_siguientes . X q_a_siguientes . X S R
+q_a_siguientes . . q_reb_a . . L S
+
+q_reb_a 1 . q_reb_a 1 . L S
+q_reb_a 0 . q_reb_a 0 . L S
+
+q_reb_a . . q_reb_b . . L S
+
+q_reb_b 1 . q_reb_b 1 . L S
+q_reb_b 0 . q_reb_b 0 . L S
+q_reb_b . . qf . . R S

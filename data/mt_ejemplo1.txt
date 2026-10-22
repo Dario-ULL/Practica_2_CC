@@ -1,0 +1,17 @@
+# Reconoce el lenguaje L = { a^n b^m | m >= n, n > 0 }
+# MT determinista de 2 cintas
+q0 q1 q2 q3 qf
+a b
+a b .
+q0
+.
+qf
+2
+q0 a . q1 a a R R
+q1 a . q1 a a R R
+q1 b . q2 b . S L
+q2 b a q2 b a R L
+q2 . . qf . . S S
+q2 b . q3 b . R S
+q3 b . q3 b . R S
+q3 . . qf . . S S

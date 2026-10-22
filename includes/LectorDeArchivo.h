@@ -4,14 +4,14 @@
  * Complejidad Computacional
  * 
  * @author  Dario Dominguez Gonzalez
- * @date    8/10/2026
+ * @date    21/10/2026
  * @brief   Programar un simulador de un autómata con pila
 */
 
 #pragma once
 
 #include "Transicion.h"
-#include "AutomataPilaVaciado.h"
+#include "MaquinaTuring.h"
 
 #include <iostream>
 #include <string>
@@ -26,8 +26,9 @@ class LectorDeArchivo {
     LectorDeArchivo(std::string nombreArchivo);
     ~LectorDeArchivo() = default;
 
-    AutomataPilaVaciado getAutomataPilaVaciado() const { return automata_; }
+    bool obtenerSiguienteLineaValida(std::ifstream& archivo, std::string& linea);
+    MaquinaTuring getMaquinaTuring() const { return automata_; }
   private:
-    bool validarAutomata() const; 
-    AutomataPilaVaciado automata_;
+    bool validar() const; 
+    MaquinaTuring automata_;
 };
