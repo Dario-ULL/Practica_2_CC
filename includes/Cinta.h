@@ -15,18 +15,18 @@
 #include <stdexcept>
 
 class Cinta {
-  public:
-    Cinta(const std::string& simboloBlanco, const std::string& cadenaEntrada = "");
+ public:
+  Cinta(const std::string& simboloBlanco, const std::string& cadenaEntrada = "");
 
-    std::string leer() const;
-    void escribir(const std::string& simbolo);
-    void mover(const std::string& movimiento);
-    void reiniciar(const std::string& cadenaEntrada = "");
-    std::string obtenerRepresentacion() const;
-  private:
-    std::deque<std::string> contenido_;
-    int posicionCabeza_; 
-    std::string simboloBlanco_;
+  std::string leer() const;
+  void escribir(const std::string& simbolo);
+  void mover(const std::string& movimiento);
+  void reiniciar(const std::string& cadenaEntrada = "");
+  std::string obtenerRepresentacion() const;
+ private:
+  std::deque<std::string> contenido_;
+  std::string simboloBlanco_;
+  int posicionCabeza_; 
 
-    void asegurarEspacio();
+  void asegurarEspacio();
 };

@@ -22,13 +22,13 @@
 #include <set>
 
 class LectorDeArchivo {
-  public:
-    LectorDeArchivo(std::string nombreArchivo);
-    ~LectorDeArchivo() = default;
+ public:
+  LectorDeArchivo(std::string nombreArchivo);
+  ~LectorDeArchivo() = default;
 
-    bool obtenerSiguienteLineaValida(std::ifstream& archivo, std::string& linea);
-    MaquinaTuring getMaquinaTuring() const { return automata_; }
-  private:
-    bool validar() const; 
-    MaquinaTuring automata_;
+  bool obtenerSiguienteLineaValida(std::ifstream& archivo, std::string& linea);
+  MaquinaTuring getMaquinaTuring() const { return automata_; }
+ private:
+  bool validar() const; 
+  MaquinaTuring automata_;
 };
